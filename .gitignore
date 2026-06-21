@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# LaTeX auxiliares (gerados na compilação)
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.lof
+*.lot
+
+# Pasta temporária do graphviz (gerada pelo código)
+data/gv_tmp/
+
+# Dados gerados pelo código (rodar 01_generate_log.py para recriar)
+data/*.csv
+data/*.json
+
+# PDF compilado (gerado pelo LaTeX — não versionar)
+report/*.pdf
+
+# Lock files do LibreOffice/Word
+.~lock.*
+*.tmp
