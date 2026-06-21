@@ -161,24 +161,27 @@ def slide_capa(prs):
              size=12, color=GRAY)
     add_text(sl, "1", 32, 16.1, 1.5, 0.9, size=12, color=GRAY, align=PP_ALIGN.RIGHT)
 
-def slide_agenda(prs):
+def slide_sumario(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Agenda", "15 minutos — 4 apresentadores")
+    header_bar(sl, "Sumário", "Tópicos abordados na apresentação")
     footer(sl, 2)
 
-    itens = [
-        ("Michelangelo", BLUE,   "Introdução, Dataset e Metodologia",   "~3 min",  3.8),
-        ("João Marcos",  BLUE2,  "Análise Exploratória e Process Discovery", "~4 min", 7.2),
-        ("André",        TEAL,   "Conformance Checking",                "~4 min", 10.6),
-        ("Daniel",       ORANGE, "Performance, Síntese e Conclusão",    "~4 min", 14.0),
+    topicos = [
+        (BLUE,   "1. Introdução ao Process Mining",              "Contexto, conceitos fundamentais e motivação"),
+        (BLUE,   "2. Dataset: BPI Challenge 2017",               "Processo de concessão de empréstimos e adaptação metodológica"),
+        (BLUE,   "3. Metodologia e Implementação",               "Pipeline de 7 etapas — pm_toolkit.py"),
+        (BLUE2,  "4. Análise Exploratória (EDA)",                "Frequência, duração dos casos e variantes"),
+        (BLUE2,  "5. Process Discovery",                         "DFG, Alpha Miner e Inductive Miner"),
+        (TEAL,   "6. Conformance Checking",                      "Fitness, Precision, Generalization, Simplicity e desvios"),
+        (ORANGE, "7. Performance Analysis e Gargalos",           "Tempo de espera e identificação de bottlenecks"),
+        (ORANGE, "8. Síntese, Limitações e Conclusão",           "Insights gerenciais e trabalhos futuros"),
     ]
-    for i, (nome, cor, topico, tempo, y) in enumerate(itens, 1):
-        add_rect(sl, 1.0, y, 0.45, 2.2, cor)
-        add_text(sl, nome, 1.7, y, 8, 1.0, size=16, bold=True, color=cor)
-        add_text(sl, topico, 1.7, y+1.0, 22, 1.0, size=14, color=DARK)
-        add_text(sl, tempo, 28.5, y+0.4, 4.5, 1.0,
-                 size=13, color=cor, align=PP_ALIGN.RIGHT, italic=True)
+    for i, (cor, titulo, desc) in enumerate(topicos):
+        y = 3.5 + i * 1.85
+        add_rect(sl, 1.0, y, 0.35, 1.5, cor)
+        add_text(sl, titulo, 1.6, y + 0.05, 20, 0.8, size=14, bold=True, color=cor)
+        add_text(sl, desc,   1.6, y + 0.75, 30, 0.7, size=12, color=GRAY)
 
 def slide_section(prs, nome, topico, cor, num):
     sl = blank(prs)
@@ -191,8 +194,7 @@ def slide_section(prs, nome, topico, cor, num):
 def slide_intro(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "O que é Process Mining?",
-               "Conectando BPM e Ciência de Dados", presenter="Michelangelo")
+    header_bar(sl, "O que é Process Mining?", "Conectando BPM e Ciência de Dados")
     footer(sl, 3)
 
     # caixa esquerda
@@ -228,8 +230,7 @@ def slide_intro(prs):
 def slide_dataset(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Dataset: BPI Challenge 2017",
-               "Adaptação metodológica por restrição de rede", presenter="Michelangelo")
+    header_bar(sl, "Dataset: BPI Challenge 2017", "Adaptação metodológica por restrição de rede")
     footer(sl, 4)
 
     # coluna esquerda — dataset real
@@ -264,7 +265,7 @@ def slide_dataset(prs):
 def slide_metodologia(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Metodologia", "Pipeline em 7 etapas", presenter="Michelangelo")
+    header_bar(sl, "Metodologia", "Pipeline em 7 etapas")
     footer(sl, 5)
 
     etapas = [
@@ -296,8 +297,7 @@ def slide_metodologia(prs):
 def slide_eda1(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Análise Exploratória — Visão Geral",
-               "3.000 casos · 54.597 eventos · 23 atividades", presenter="João Marcos")
+    header_bar(sl, "Análise Exploratória — Visão Geral", "3.000 casos · 54.597 eventos · 23 atividades")
     footer(sl, 6)
 
     # KPIs
@@ -325,8 +325,7 @@ def slide_eda1(prs):
 def slide_eda2(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Análise Exploratória — Duração e Variantes",
-               "Lead time e distribuição de variantes de execução", presenter="João Marcos")
+    header_bar(sl, "Análise Exploratória — Duração e Variantes", "Lead time e distribuição de variantes de execução")
     footer(sl, 7)
 
     add_image(sl, os.path.join(FIG, "03_case_duration_distribution.png"), 0.8, 3.6, 15.5)
@@ -350,8 +349,7 @@ def slide_eda2(prs):
 def slide_dfg(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Process Discovery — DFG",
-               "Directly-Follows Graph: completo e filtrado (limiar 10%)", presenter="João Marcos")
+    header_bar(sl, "Process Discovery — DFG", "Directly-Follows Graph: completo e filtrado (limiar 10%)")
     footer(sl, 8)
 
     add_image(sl, os.path.join(FIG, "06_dfg_full.png"), 0.5, 3.5, 16.0)
@@ -372,8 +370,7 @@ def slide_dfg(prs):
 def slide_alpha(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Alpha Miner — Rede de Petri",
-               "23 places · 23 transições", presenter="André")
+    header_bar(sl, "Alpha Miner — Rede de Petri", "23 places · 23 transições")
     footer(sl, 9)
 
     add_image(sl, os.path.join(FIG, "08_alpha_miner_net.png"), 0.5, 3.4, 22.0)
@@ -401,8 +398,7 @@ def slide_alpha(prs):
 def slide_conformance(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Conformance Checking — Resultados",
-               "Comparação entre os modelos descobertos", presenter="André")
+    header_bar(sl, "Conformance Checking — Resultados", "Comparação entre os modelos descobertos")
     footer(sl, 10)
 
     # tabela manual
@@ -435,8 +431,7 @@ def slide_conformance(prs):
 def slide_desvios(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Conformance Checking — Desvios",
-               "Top desvios contra o modelo DFG filtrado", presenter="André")
+    header_bar(sl, "Conformance Checking — Desvios", "Top desvios contra o modelo DFG filtrado")
     footer(sl, 11)
 
     add_image(sl, os.path.join(FIG, "09_conformance_metrics.png"), 0.5, 3.5, 18.0)
@@ -452,8 +447,7 @@ def slide_desvios(prs):
 def slide_performance(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Performance Analysis — Gargalos",
-               "Tempo de espera entre atividades consecutivas", presenter="Daniel")
+    header_bar(sl, "Performance Analysis — Gargalos", "Tempo de espera entre atividades consecutivas")
     footer(sl, 12)
 
     add_image(sl, os.path.join(FIG, "11_bottlenecks.png"), 0.5, 3.5, 18.5)
@@ -470,8 +464,7 @@ def slide_performance(prs):
 def slide_sintese(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Síntese e Insights",
-               "O que o Process Mining revelou sobre o processo de empréstimos", presenter="Daniel")
+    header_bar(sl, "Síntese e Insights", "O que o Process Mining revelou sobre o processo de empréstimos")
     footer(sl, 13)
 
     insights = [
@@ -493,7 +486,7 @@ def slide_sintese(prs):
 def slide_limitacoes(prs):
     sl = blank(prs)
     add_rect(sl, 0, 0, 33.87, 19.05, LIGHT)
-    header_bar(sl, "Limitações e Trabalhos Futuros", presenter="Daniel")
+    header_bar(sl, "Limitações e Trabalhos Futuros")
     footer(sl, 14)
 
     add_rect(sl, 1.0, 3.6, 15.0, 10.5, WHITE)
@@ -562,26 +555,22 @@ def slide_perguntas(prs):
 # ── Main ─────────────────────────────────────────────────────────────────────
 prs = new_prs()
 
-slide_capa(prs)                                    # 1
-slide_agenda(prs)                                  # 2
-slide_section(prs, "Michelangelo", "Introdução · Dataset · Metodologia", BLUE, 3)
-slide_intro(prs)                                   # 3 (vira 4)
-slide_dataset(prs)                                 # 4 (vira 5)
-slide_metodologia(prs)                             # 5 (vira 6)
-slide_section(prs, "João Marcos", "Análise Exploratória · Process Discovery", BLUE2, 7)
-slide_eda1(prs)                                    # 7 (vira 8)
-slide_eda2(prs)                                    # 8 (vira 9)
-slide_dfg(prs)                                     # 9 (vira 10)
-slide_section(prs, "André", "Conformance Checking", TEAL, 11)
-slide_alpha(prs)                                   # 11 (vira 12)
-slide_conformance(prs)                             # 12 (vira 13)
-slide_desvios(prs)                                 # 13 (vira 14)
-slide_section(prs, "Daniel", "Performance · Síntese · Conclusão", ORANGE, 15)
-slide_performance(prs)                             # 15 (vira 16)
-slide_sintese(prs)                                 # 16 (vira 17)
-slide_limitacoes(prs)                              # 17 (vira 18)
-slide_conclusao(prs)                               # 18 (vira 19)
-slide_perguntas(prs)                               # 19 (vira 20)
+slide_capa(prs)         # 1
+slide_sumario(prs)      # 2
+slide_intro(prs)        # 3
+slide_dataset(prs)      # 4
+slide_metodologia(prs)  # 5
+slide_eda1(prs)         # 6
+slide_eda2(prs)         # 7
+slide_dfg(prs)          # 8
+slide_alpha(prs)        # 9
+slide_conformance(prs)  # 10
+slide_desvios(prs)      # 11
+slide_performance(prs)  # 12
+slide_sintese(prs)      # 13
+slide_limitacoes(prs)   # 14
+slide_conclusao(prs)    # 15
+slide_perguntas(prs)    # 16
 
 prs.save(OUT)
 print(f"Salvo: {OUT}  ({len(prs.slides)} slides)")
