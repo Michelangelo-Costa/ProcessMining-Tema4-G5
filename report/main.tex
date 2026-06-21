@@ -33,6 +33,7 @@
 \setlist[enumerate]{topsep=2pt,itemsep=1pt,parsep=0pt}
 \usepackage[hidelinks]{hyperref}
 \usepackage{microtype}
+\usepackage{rotating}
 
 \begin{document}
 
@@ -179,15 +180,15 @@ O DFG filtrado (Figura~\ref{fig:dfg}) revela o \textit{happy path}: fluxo sequen
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.82\textwidth]{06_dfg_full.png}\\[4pt]
-\includegraphics[width=0.82\textwidth]{07_dfg_filtered_heuristic.png}
-\caption{DFG completo (acima) e DFG filtrado com limiar de 10\% (abaixo).}
+\includegraphics[width=0.48\textwidth,height=9cm,keepaspectratio]{06_dfg_full.png}\hfill
+\includegraphics[width=0.48\textwidth,height=9cm,keepaspectratio]{07_dfg_filtered_heuristic.png}
+\caption{DFG completo (esquerda) e DFG filtrado com limiar de 10\% (direita).}
 \label{fig:dfg}
 \end{figure}
 
 \begin{figure}[htbp]
 \centering
-\includegraphics[width=0.92\textwidth]{08_alpha_miner_net.png}
+\includegraphics[width=0.72\textwidth,height=11cm,keepaspectratio]{08_alpha_miner_net.png}
 \caption{Rede de Petri descoberta pelo Alpha Miner.}
 \label{fig:alpha}
 \end{figure}

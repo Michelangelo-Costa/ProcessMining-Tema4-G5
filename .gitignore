@@ -33,4 +33,9 @@ report/*.pdf
 
 # Lock files do LibreOffice/Word
 .~lock.*
+~$*
 *.tmp
+
+# Materiais de apoio interno (não versionados)
+roteiro/
+estudo/
