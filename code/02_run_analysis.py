@@ -141,7 +141,7 @@ plt.close()
 # 2.1 DFG completo (visualizacao "Heuristic-Miner-like": filtra arestas fracas)
 def render_dfg(dfg, act_freq, start_acts, end_acts, path, freq_threshold_ratio=0.0, title=""):
     g = graphviz.Digraph(format="png")
-    g.attr(rankdir="LR", fontsize="10")
+    g.attr(rankdir="TB", fontsize="11", size="12,14", dpi="180", nodesep="0.3", ranksep="0.5")
     max_f = max(dfg.values())
     shown_acts = set()
     for (a, b), f in dfg.items():
@@ -176,7 +176,7 @@ metrics["alpha_n_transitions"] = len(alpha_res.transitions)
 
 def render_alpha_net(alpha_res, path):
     g = graphviz.Digraph(format="png")
-    g.attr(rankdir="LR")
+    g.attr(rankdir="TB", size="14,16", dpi="180", nodesep="0.3", ranksep="0.5")
     for t in alpha_res.transitions:
         g.node(t, shape="box", style="filled", fillcolor="#ffd6a5", fontsize="9")
     for p in alpha_res.places:
