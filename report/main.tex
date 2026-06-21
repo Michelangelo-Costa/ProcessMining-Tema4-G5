@@ -33,7 +33,7 @@
 
 % ---- Spacing ----
 \usepackage{setspace}
-\onehalfspacing
+\setstretch{1.3}
 \setlength{\parindent}{1.25cm}
 \usepackage{indentfirst}
 
@@ -319,7 +319,7 @@ garantindo plena reprodutibilidade.
 
 \subsection{Características do log sintético}
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Comparativo entre o BPI17 original e o log sintético utilizado neste trabalho.}
 \label{tab:dataset}
@@ -431,7 +431,7 @@ caso é de 4,82 dias (mediana 4,14 dias), com 90\% dos casos concluídos em até
 dias e um caso extremo de 39,17 dias --- indicativo de cauda longa compatível com laços
 de re-trabalho.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.48\textwidth]{01_activity_frequency.png}\hfill
 \includegraphics[width=0.48\textwidth]{02_temporal_distribution.png}
@@ -439,7 +439,7 @@ de re-trabalho.
 \label{fig:eda1}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.62\textwidth]{03_case_duration_distribution.png}
 \caption{Distribuição da duração dos casos (\textit{lead time}).}
@@ -452,7 +452,7 @@ são: \texttt{A\_Complete} (1.621 casos, 54,0\%), \texttt{A\_Denied} (772, 25,7\
 a variante mais frequente cobre 19,33\% dos casos e as cinco primeiras somam 44,47\%
 --- estrutura de cauda longa típica de processos com laços e ramificações condicionais.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.65\textwidth]{05_top_variants.png}
 \caption{Top 10 variantes mais frequentes (de 169 no total).}
@@ -466,7 +466,7 @@ Ao filtrar arestas com frequência inferior a 10\% da máxima (dir.), obtém-se 
 visualização mais legível do \textit{happy path} --- equivalente conceitual ao Heuristic
 Miner.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.82\textwidth]{06_dfg_full.png}\\[6pt]
 \includegraphics[width=0.82\textwidth]{07_dfg_filtered_heuristic.png}
@@ -478,7 +478,7 @@ O Alpha Miner descobriu uma rede de Petri com 23 \textit{places} para 23 transi�
 número elevado de \textit{places} é consistente com a literatura sobre as limitações do
 algoritmo diante de laços de re-trabalho e múltiplas ofertas.
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.95\textwidth]{08_alpha_miner_net.png}
 \caption{Rede de Petri descoberta pelo Alpha Miner.}
@@ -495,7 +495,7 @@ capturaria.
 \subsection{Conformance Checking}
 \label{sec:resultados_conf}
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Métricas de conformidade por algoritmo de descoberta.}
 \label{tab:conformance}
@@ -511,7 +511,7 @@ DFG completo (bruto)          & 1,0000 & 1,0000 & 1,0000 & 0,9058 &  29 \\
 \end{tabularx}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.56\textwidth]{09_conformance_metrics.png}\hfill
 \includegraphics[width=0.40\textwidth]{10_top_deviations.png}
@@ -524,7 +524,7 @@ mas precisão de apenas 0,0664 --- assinatura clássica do modelo flor, que com 
 arestas permite combinações jamais observadas no log. Os cinco principais desvios
 identificados contra o DFG filtrado são listados na Tabela~\ref{tab:desvios}:
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Top 5 desvios identificados contra o modelo DFG filtrado.}
 \label{tab:desvios}
@@ -548,7 +548,7 @@ exceção rara porém processualmente distinta.
 
 \subsection{Performance Analysis}
 
-\begin{table}[H]
+\begin{table}[htbp]
 \centering
 \caption{Top 6 gargalos: maior tempo médio de espera entre atividades consecutivas.}
 \label{tab:bottlenecks}
@@ -566,7 +566,7 @@ W\_Handle leads $\to$ W\_Complete app.       & 2.829 & 0,75 & 0,48 & 1,62 \\
 \end{tabularx}
 \end{table}
 
-\begin{figure}[H]
+\begin{figure}[htbp]
 \centering
 \includegraphics[width=0.56\textwidth]{11_bottlenecks.png}\hfill
 \includegraphics[width=0.40\textwidth]{12_wait_by_activity.png}
@@ -693,7 +693,6 @@ discutidas, como feito na Seção~\ref{sec:limitacoes}.
 % ===========================================================
 % REFERÊNCIAS
 % ===========================================================
-\newpage
 \renewcommand{\refname}{Referências}
 \begin{thebibliography}{99}
 
