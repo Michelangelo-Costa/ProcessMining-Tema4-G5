@@ -94,7 +94,26 @@ O \textbf{Heuristic Miner} \cite{weijters2011} introduz métricas de dependênci
 
 \subsection{Conformance Checking}
 
-Compara um modelo \textit{de jure} com o comportamento \textit{de facto} do log segundo quatro métricas \cite{vanderAalst2016}: \textbf{Fitness} (capacidade de reproduzir o comportamento observado), \textbf{Precision} (evitar comportamento nunca observado), \textbf{Generalization} (capacidade de generalizar) e \textbf{Simplicity} (preferência por modelos compactos). O trade-off central é entre fitness e precision: o modelo flor tende a fitness alta e precisão baixa.
+Conformance Checking compara um modelo \textit{de jure} com o comportamento \textit{de facto} do log segundo quatro métricas \cite{vanderAalst2016}:
+
+\begin{itemize}
+  \item \textbf{Fitness:} capacidade do modelo de reproduzir o comportamento observado. Fitness baixa indica que o modelo não cobre parte dos traces reais.
+  \item \textbf{Precision:} grau em que o modelo evita comportamento nunca observado no log. Precisão baixa indica \textit{underfitting}.
+  \item \textbf{Generalization:} estimativa da capacidade de generalizar para comportamento futuro não visto no log de treino.
+  \item \textbf{Simplicity:} preferência por modelos estruturalmente compactos, sob o princípio da navalha de Occam.
+\end{itemize}
+
+O trade-off central é entre fitness e precision: o modelo flor tende a fitness alta e precisão baixa; um modelo restritivo, ao inverso.
+
+\subsection{Performance Analysis}
+
+A análise de performance utiliza os timestamps para medir tempos de espera entre atividades consecutivas e a duração total (\textit{lead time}) de cada caso. Um \textbf{gargalo} é identificado quando uma transição apresenta tempo médio de espera significativamente superior às demais, frequentemente associado a etapas dependentes de intervenção humana.
+
+% ===========================================================
+\section{Trabalhos Relacionados}
+% ===========================================================
+
+O BPI Challenge 2017 é amplamente usado como \textit{benchmark} em pesquisas de process mining. \cite{caro2019} aplicaram conformance checking ao dataset real identificando padrões de re-trabalho e gargalos nas etapas de validação manual similares aos observados neste trabalho, com a vantagem de utilizar o log original e o PM4Py. \cite{medeiros2007} propuseram algoritmos genéticos como alternativa ao Alpha Miner para logs ruidosos. O Process Mining Manifesto \cite{manifesto2011} estabelece como princípio central que os event logs devem ser tratados como fatos de primeira classe, reforçando a importância de documentar de forma transparente quando o log analisado é sintético, como neste caso.
 
 % ===========================================================
 \section{Dataset}
@@ -192,7 +211,26 @@ DFG completo (bruto)          & 1,0000 & 1,0000 & 1,0000 & 0,9058 &  29 \\
 \end{tabularx}
 \end{table}
 
-O Inductive Miner exibe o trade-off clássico: fitness 0,9973 com precisão 0,0664, assinatura do modelo flor que, com 422 arestas, permite combinações jamais observadas. O Alpha Miner produziu representação mais equilibrada. Os cinco principais desvios contra o DFG filtrado são: laço de múltiplas ofertas (267 ocorrências), omissão de \texttt{W\_Handle leads} (171), ramificação de fraude (126, 78 e 48).
+O Inductive Miner exibe o trade-off clássico: fitness 0,9973 com precisão 0,0664, assinatura do modelo flor que, com 422 arestas, permite combinações jamais observadas. O Alpha Miner produziu representação mais equilibrada para este log.
+
+\begin{table}[htbp]
+\centering
+\caption{Top 5 desvios identificados contra o modelo DFG filtrado.}
+\label{tab:desvios}
+\begin{tabularx}{\textwidth}{Xr}
+\toprule
+\textbf{Transição (desvio)} & \textbf{Freq.} \\
+\midrule
+\texttt{W\_Call after offers} $\to$ \texttt{O\_Create Offer}    & 267 \\
+\texttt{A\_Submitted} $\to$ \texttt{W\_Complete application}    & 171 \\
+\texttt{A\_Concept} $\to$ \texttt{W\_Assess potential fraud}    & 126 \\
+\texttt{W\_Assess potential fraud} $\to$ \texttt{A\_Denied}     &  78 \\
+\texttt{W\_Assess potential fraud} $\to$ \texttt{A\_Accepted}   &  48 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Os dois primeiros desvios (laço de múltiplas ofertas e omissão de \texttt{W\_Handle leads}) são estruturalmente esperados. Os três remanescentes correspondem à ramificação de análise de fraude, via de exceção rara porém processualmente distinta.
 
 \begin{figure}[htbp]
 \centering
@@ -233,13 +271,28 @@ W\_Handle leads $\to$ W\_Complete app.      & 2.829 & 0,75 & 0,48 & 1,62 \\
 O maior gargalo é \texttt{O\_Sent} $\to$ \texttt{W\_Call after offers} (média 1,27 d; P90 2,70 d). Etapas automáticas (\texttt{A\_Submitted}, \texttt{O\_Created}) apresentam tempos próximos de zero, confirmando que os atrasos residem na capacidade humana de atendimento, não na tecnologia.
 
 % ===========================================================
-\section{Discussão e Limitações}
+\section{Discussão}
+% ===========================================================
+
+O \textit{happy path} é seguido por apenas 19,3\% dos casos; os demais divergem via laços de re-trabalho ou ramificação de fraude, gerando 169 variantes. Esse resultado indica que o processo real é substancialmente mais variável do que um fluxograma idealizado sugeriria.
+
+Os principais gargalos concentram-se nas etapas de contato pós-oferta e validação documental, ambas dependentes de ação humana, com espera média superior a 25 horas. As etapas automáticas apresentam tempos próximos de zero, confirmando que os atrasos residem na capacidade de atendimento humano.
+
+Considerando métricas de conformidade e interpretabilidade, o Alpha Miner produziu modelo mais equilibrado para este log: fitness e precisão elevadas com apenas 29 arestas. O Inductive Miner, apesar de garantias formais superiores, foi prejudicado pela alta variabilidade comportamental: sem encontrar cortes estruturais limpos, recorreu ao modelo flor, sacrificando precisão (0,066) e simplicidade em favor de fitness. Esse resultado é consistente com \cite{leemans2013}: processos com alta variabilidade \textit{ad-hoc} tendem a produzir modelos flor de baixo valor analítico.
+
+% ===========================================================
+\section{Limitações}
 \label{sec:limitacoes}
 % ===========================================================
 
-O \textit{happy path} é seguido por apenas 19,3\% dos casos; os demais divergem via laços de re-trabalho ou ramificação de fraude, gerando 169 variantes. Os principais gargalos concentram-se em etapas de trabalho humano (contato pós-oferta e validação documental), com espera média superior a 25 horas. O Alpha Miner produziu modelo mais equilibrado que o Inductive Miner para este log, em razão da alta variabilidade comportamental que força o segundo ao modelo flor.
+\begin{itemize}
+  \item \textbf{Dataset sintético:} o log não captura ruído idiossincrático, outliers e anomalias genuínas do log real; toda variabilidade foi programada explicitamente.
+  \item \textbf{Volume reduzido:} 3.000 casos representam fração dos 31.509 reais, podendo afetar a robustez estatística de algumas métricas.
+  \item \textbf{Algoritmos próprios:} as implementações de Alpha Miner, Inductive Miner e métricas de conformidade não foram validadas contra o PM4Py; os valores numéricos não são diretamente comparáveis com benchmarks da literatura.
+  \item \textbf{Heuristic Miner aproximado:} foi representado apenas pelo DFG filtrado por frequência, sem as heurísticas de dependência estatística do algoritmo original.
+\end{itemize}
 
-As principais limitações são: (i)~uso de log sintético, que não captura ruído e outliers reais; (ii)~implementações próprias dos algoritmos, não validadas contra o PM4Py; (iii)~métricas de conformidade baseadas em aproximações heurísticas, não diretamente comparáveis com \textit{token replay} ou \textit{alignments} da literatura. Como trabalho futuro, recomenda-se reexecutar com o dataset real e o PM4Py, aplicar \textit{alignment-based conformance checking} e explorar o Inductive Miner com filtragem de ruído (IMf).
+Como trabalho futuro, recomenda-se: (i)~reexecutar a análise com o dataset real e o PM4Py; (ii)~aplicar \textit{alignment-based conformance checking}; (iii)~explorar o Inductive Miner com filtragem de ruído (IMf) para evitar o modelo flor.
 
 % ===========================================================
 \section{Conclusão}
