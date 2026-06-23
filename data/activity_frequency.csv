@@ -1,0 +1,24 @@
+concept:name,count
+W_Complete application,4355
+O_Create Offer,4041
+O_Created,4041
+O_Sent (mail and online),4041
+W_Call after offers,4041
+O_Returned,3104
+A_Create Application,3000
+A_Submitted,3000
+A_Concept,3000
+A_Accepted,2922
+W_Validate application,2922
+A_Validating,2922
+W_Handle leads,2829
+O_Accepted,1621
+A_Pending,1621
+A_Complete,1621
+A_Incomplete,1355
+W_Call incomplete files,1355
+A_Denied,772
+O_Refused,694
+O_Cancelled,607
+A_Cancelled,607
+W_Assess potential fraud,126
